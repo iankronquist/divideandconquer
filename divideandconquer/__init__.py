@@ -11,6 +11,7 @@ import requests
 app = Flask(__name__)
 app.debug = True
 r_server = redis.Redis("localhost")
+print 'redis up'
 
 @app.route('/', methods=['GET', 'POST'])
 def classify():
@@ -43,3 +44,4 @@ def refillQueue():
 
 if __name__ == '__main__':
     app.run()
+    print 'app running'
