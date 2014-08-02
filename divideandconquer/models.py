@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
@@ -18,6 +18,7 @@ class Response(Base):
     is_spam = Column(Integer)
     json_hash = Column(String, primary_key=True)
     json = Column(String)
+    classified_by = Column(ForeignKey('users.uid'))
 
 # this is probably a bad idea...
 class JobQueue(Base):
