@@ -18,7 +18,7 @@ import requests
 from divideandconquer.models import Base, User, Response, JobQueue
 
 app = Flask(__name__)
-engine = create_engine(os.environ['DBENGINE'])
+engine = create_engine(os.environ['DATABASE_URL'])
 Base.metadata.create_all(engine) 
 sessionFactory = sessionmaker(engine)
 q = Queue()
@@ -40,7 +40,7 @@ def put_jsons_in_db(jsons):
     session = sessionFactory()
     for value in jsons:
         jvalue = json.dumps(value)
-        key = sha(jvalue).hexdigest()
+        key = sha(jvalue).hexdigest() + str(datetime.now())
         push_to_queue(key)
         # is_spam is a trinary value
         # 1 is true
