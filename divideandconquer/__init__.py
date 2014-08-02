@@ -42,6 +42,6 @@ def refillQueue():
         r_server.set(resp['id'], json.dumps(resp))
 
 
-if __name__ == '__main__':
-    app.run()
-    print 'app running'
+#if __name__ == '__main__':
+#    app.run()
+#    print 'app running'
