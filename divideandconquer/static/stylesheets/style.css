@@ -1,0 +1,58 @@
+#classify {
+
+}
+
+#happy {
+
+}
+
+#description {
+
+}
+
+#about {
+	
+}
+
+form {
+	text-align: center;
+}
+
+h1 {
+	text-align: center;
+}
+
+#submit {
+    width: 30em;  height: 5em;
+}
+
+.bubble {
+
+	padding-top: 25px;
+	padding-bottom: 25px;
+	padding-right: 50px;
+	padding-left: 50px;
+	
+	background-color: #ffffff;
+	border-radius: 25px;
+	/*box-shadow: 10px 10px 5px #888888;*/
+	margin: 25px;
+
+}
+
+#capsule {
+
+	padding-top: 25px;
+	padding-bottom: 25px;
+	padding-right: 50px;
+	padding-left: 50px;
+	
+	background-color: #ffffff;
+	border-radius: 25px;
+	/*box-shadow: 10px 10px 5px #888888;*/
+	margin: 25px;
+}
+
+body {
+	background-color: #3C9BFA;
+}

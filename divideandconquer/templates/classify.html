@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="bubble"> Is this message spam? </h1>
+<div id="about" class="bubble">
+	Help classify spam messages for Mozilla projects such as
+	<a href="http://input.mozilla.com">input</a>
+	and
+	<a href="http://support.mozilla.com">kitsune</a>!
+	Using your feedback we'll use machine learning to train a bayesian
+	classifier to keep spam out of Mozilla projects!
+	You can learn more about the bayesian classifier
+	<a href="http://nbviewer.ipython.org/github/iankronquist/spicedham/blob/dev-notebook/Spicedham%20experiments.ipynb">here</a>
+	If you want to know how else you can support Mozilla make the web a better
+	place,
+	<a href="http://www.whatcanidoformozilla.org">check this out</a>.
+</div>
+<div id="capsule">
+<div id="description">
+	{{ description }}
+</div>
+<div id="happy">
+	This user reported that firefox made them
+	{% if happy %}
+		happy! 😺
+	{% else %}
+		sad. 😿
+	{% endif %}
+</div>
+<form id="classify" action="/" method="POST">
+<input type="hidden" name="id" value="{{ id }}">
+<input type="submit" id="submit" name="spam" value="It's Spam!">
+<input type="submit" id="submit" name="ham" value="It's Ham*!">
+</form>
+</div>
+
+<div class="bubble">
+*Ham is any sort of legit message, even if it's misspelled, in Polish,
+or says "Fuck You". Comments like "Sex Film" are spam though.
+<br><br>
+Also, a lot of these comments are pretty depressing. Most of them come from
+people who aren't very familiar with computers. Projects are underway to help
+improve Firefox and remove toolbars and extensions which cause crashes.
+</div>
+{% endblock %}
