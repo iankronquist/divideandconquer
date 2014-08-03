@@ -28,4 +28,4 @@ class Response(db.Model):
     is_spam = db.Column(db.Integer)
     json_hash = db.Column(db.Text, primary_key=True)
     json = db.Column(db.String)
-    classified_by = db.Column(db.ForeignKey('users.name'))
+    classified_by = db.Column(db.String)#db.ForeignKey('users.name'))
