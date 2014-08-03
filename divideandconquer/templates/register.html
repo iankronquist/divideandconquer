@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bubble">
+	<h1>Register <a href="/">or go back to the login</a><h1>
+</div>
+<div class="bubble">
+	<form id="classify" action="/register" method="POST">
+	User Name:   <input type="text" name="username">
+	Password:   <input type="password" name="password">
+	<input type="submit" id="submit" name="ham" value="Log in!">
+</form>
+</div>
+
+{% endblock %}

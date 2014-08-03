@@ -1,27 +1,30 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
+from divideandconquer import db
 
-class User(Base):
+class User(db.Model):
     __tablename__ = "users"
-    uid = Column(String, primary_key=True)
-    name = Column(String)
-    password = Column(String)
-    salt = Column(String)
+    name = db.Column(db.String, primary_key=True)
+    password = db.Column(db.String)
+    salt = db.Column(db.String)
 
-class Response(Base):
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.uid
+
+class Response(db.Model):
     __tablename__ = "responses"
     # is_spam is a trinary value
     # 1 is true
     # 2 is false
     # 3 is unknown
-    is_spam = Column(Integer)
-    json_hash = Column(String, primary_key=True)
-    json = Column(String)
-    classified_by = Column(ForeignKey('users.uid'))
-
-# this is probably a bad idea...
-class JobQueue(Base):
-    __tablename__ = "jobqueue"
-    json_hash = Column(String, primary_key=True)
-    priority = Column(Integer)
+    is_spam = db.Column(db.Integer)
+    json_hash = db.Column(db.String, primary_key=True)
+    json = db.Column(db.String)
+    classified_by = db.Column(db.ForeignKey('users.name'))
