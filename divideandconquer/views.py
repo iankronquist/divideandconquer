@@ -5,9 +5,9 @@ import json
 from datetime import datetime
 
 from flask import Flask, request, render_template, flash, redirect, url_for, g
-from flask.ext.login import LoginManager, login_required
+from flask.ext.login import LoginManager, login_required, login_user, logout_user
 from flask.ext.sqlalchemy import SQLAlchemy
-from divideandconquer import app, db
+from divideandconquer import app, db, login_manager
 from divideandconquer.models import User, Response
 from divideandconquer.queuemanagement import q, refillQueue
 
@@ -38,17 +38,29 @@ def update_spam_status(key, status):
 @app.route('/logout')
 @login_required
 def logout():
+    logout_user()
     return login()
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.filter_by(uid=userid).first()
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        try:
-            user = User.query.filter_by(request.form['username']).first()
-        except:
+        #try:
+        user = User.query.filter_by(name=request.form['username']).first()
+        if user == None:
+            print None
             flash('User name not recognized. Maybe you need to register?')
             return redirect(url_for('login'))
-        if user.password == sha(request.form['password'] + user.salt).digest():
+        #except:
+        #    flash('User name not recognized. Maybe you need to register?')
+        #    print 'except'
+        #    return redirect(url_for('login'))
+        if user.password == sha(request.form['password'] + user.salt).hexdigest():
+            login_user(user)
+            flash('You are logged in and ready to go!')
             return redirect(url_for('classify'))
         else:
             flash('Nope, wrong password. Try again')
@@ -64,13 +76,14 @@ def register():
     print 'post'
     try:
         user = User.query.filter_by(name=request.form['username']).first()
-        if user:
+        if user != None:
+            print user
             flash('That user name already exists. Try again')
             return render_template('register.html')
     except:
         pass
     salt = b64encode(os.urandom(15))
-    user = User(name=request.form['username'] ,
+    user = User(name=request.form['username'], uid=request.form['username'],
         password=sha(request.form['password'] + salt).hexdigest(), salt=salt)
     db.session.add(user)
     try:
@@ -83,6 +96,7 @@ def register():
     return show_message()
 
 @app.route('/classify', methods=['GET', 'POST'])
+@login_required
 def classify():
     if request.method == 'POST':
         if request.form.get('spam', None):

@@ -2,6 +2,7 @@ from divideandconquer import db
 
 class User(db.Model):
     __tablename__ = "users"
+    uid = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, primary_key=True)
     password = db.Column(db.String)
     salt = db.Column(db.String)

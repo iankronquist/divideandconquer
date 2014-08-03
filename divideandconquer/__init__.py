@@ -14,6 +14,9 @@ import requests
 app = Flask(__name__)
 app.secret_key = os.environ['APP_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = '/'
 db = SQLAlchemy(app)
 from divideandconquer.models import User, Response
 from divideandconquer import queuemanagement
